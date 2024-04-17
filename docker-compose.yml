@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  backend:
+    container_name: backend
+    image: payrollsystem/backend
+    build: ./payrollsystem
+    env_file:
+      - ./.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./payrollsystem:/app
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: nouchka/sqlite3:latest
+    volumes:
+      - sqlite_data
+    restart: on-failure
+
+volumes:
+  sqlite_data:
+
