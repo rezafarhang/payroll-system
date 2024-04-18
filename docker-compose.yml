@@ -10,7 +10,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./payrollsystem:/app
+      - ./config:/app
     restart: always
     depends_on:
       - db

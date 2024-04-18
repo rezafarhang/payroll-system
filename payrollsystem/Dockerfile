@@ -3,7 +3,7 @@ RUN apt-get update
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /app
 WORKDIR /app
-COPY payrollsystem /app
+COPY config /app
 RUN apt-get update \
 	&& apt-get install -y gdal-bin \
 	&& apt-get install -y python3-gdal \
