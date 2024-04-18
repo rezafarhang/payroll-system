@@ -17,11 +17,14 @@ services:
 
   db:
     container_name: db
-    image: nouchka/sqlite3:latest
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - sqlite_data
+      - "postgres_data:/var/lib/postgresql/data/"
+    ports:
+      - "5432:5432"
     restart: on-failure
 
 volumes:
-  sqlite_data:
-
+  postgres_data:
