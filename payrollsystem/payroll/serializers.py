@@ -52,8 +52,9 @@ class DailyIncomeSerializer(serializers.ModelSerializer):
         fields = ('courier', 'income', 'date', )
 
 
-class WeeklyIncomeSerializer(serializers.Serializer):
-    courier = CourierSerializer()
-    rides_count = serializers.IntegerField()
-    rides_income = serializers.IntegerField()
-    date = serializers.DateField()
+class WeeklyIncomeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = payroll_models.WeeklyIncome
+        fields = ('courier', 'income', 'start_date', 'end_date', )
+
