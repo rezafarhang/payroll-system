@@ -5,7 +5,7 @@ from django.db import transaction
 from django.db.models import Sum
 
 from payroll import models as payroll_models
-from payroll.utils import DateDataManager
+from payroll.managers import DateDataManager
 
 
 @celery.shared_task()

@@ -2,7 +2,7 @@ from rest_framework import permissions, generics
 
 from payroll import models as payroll_models
 from payroll import serializers as payroll_serializers
-from payroll.utils import DateDataManager
+from payroll.managers import DateDataManager
 
 
 class RideIncomeView(generics.ListCreateAPIView):
