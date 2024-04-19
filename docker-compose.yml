@@ -26,5 +26,21 @@ services:
       - "5432:5432"
     restart: on-failure
 
+  redis:
+    container_name: redis
+    image: redis:alpine
+    restart: always
+
+
+  celery:
+    build: ./payrollsystem
+    container_name: celery
+    command: >
+      sh -c "celery -A config worker -l info  &&
+      celery -A config beat -l info"
+
+    depends_on:
+      - redis
+
 volumes:
   postgres_data:

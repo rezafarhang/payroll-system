@@ -9,7 +9,9 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+from __future__ import absolute_import, unicode_literals
 import os
+from celery import Celery
 from pathlib import Path
 from datetime import timedelta
 
@@ -135,3 +137,9 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT', ),
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+
+app = Celery('config', broker='redis://redis:6379/0')
+app.config_from_object('django.conf:settings', namespace='CELERY')
+app.autodiscover_tasks()
