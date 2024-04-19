@@ -16,3 +16,10 @@ class DailyIncomeAdmin(admin.ModelAdmin):
     list_display = ['courier', 'income', 'date']
     search_fields = ['courier__username', 'date']
     date_hierarchy = 'date'
+
+
+@admin.register(payroll_models.WeeklyIncome)
+class WeeklyIncomeAdmin(admin.ModelAdmin):
+    list_display = ['courier', 'income', 'start_date', 'end_date']
+    search_fields = ['courier__username', 'start_date']
+    date_hierarchy = 'start_date'
