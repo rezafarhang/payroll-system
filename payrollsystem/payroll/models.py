@@ -17,7 +17,22 @@ class RideIncome(models.Model):
     date = models.DateField(default=date.today())
 
 
-class DailyIncome(models.Model):
-    courier = models.ForeignKey(User, related_name='daily_incomes', on_delete=models.CASCADE)
+class PeriodicIncome(models.Model):
+    courier = models.ForeignKey(User, on_delete=models.CASCADE)
     income = models.IntegerField(validators=[MinValueValidator(1)])
+
+    class Meta:
+        abstract = True
+
+
+class DailyIncome(PeriodicIncome):
     date = models.DateField(default=date.today(), unique=True, db_index=True)
+
+
+class WeeklyIncome(PeriodicIncome):
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    class Meta:
+        unique_together = ('courier', 'start_date')  # Ensures only one weekly income per courier per week
+
