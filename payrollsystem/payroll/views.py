@@ -16,3 +16,11 @@ class RideIncomeView(generics.ListCreateAPIView):
 class DailyIncomeList(generics.ListAPIView):
     queryset = payroll_models.DailyIncome.objects.all()
     serializer_class = payroll_serializers.DailyIncomeSerializer
+
+
+class DailyIncomeItem(generics.RetrieveAPIView):
+    serializer_class = payroll_serializers.DailyIncomeSerializer
+    lookup_field = 'courier_id'
+
+    def get_queryset(self):
+        return payroll_models.DailyIncome.objects.filter(courier_id=self.kwargs['courier_id'])
