@@ -12,3 +12,7 @@ class RideIncomeView(generics.ListCreateAPIView):
             return payroll_serializers.RideIncomeListSerializer
         return payroll_serializers.RideIncomeSerializer
 
+
+class DailyIncomeList(generics.ListAPIView):
+    queryset = payroll_models.DailyIncome.objects.all()
+    serializer_class = payroll_serializers.DailyIncomeSerializer
