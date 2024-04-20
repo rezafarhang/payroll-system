@@ -26,5 +26,25 @@ services:
       - "5432:5432"
     restart: on-failure
 
+  redis:
+    container_name: redis
+    image: redis:alpine
+    restart: always
+
+
+  celery:
+    image: "celery:latest"
+    container_name: celery
+    command: >
+      sh -c "celery worker -l info  &&
+      celery beat -l info"
+    environment:
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    links:
+      - redis
+    depends_on:
+      - redis
+
 volumes:
   postgres_data:
