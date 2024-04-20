@@ -26,6 +26,17 @@ class RideIncomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = payroll_models.RideIncome
         fields = ('courier', 'income', 'type', 'date', )
+
+    def validate(self, attrs):
+        income, type = attrs.get('income'), attrs.get('type')
+        if type == payroll_models.RideIncomeType.DEFICIT:
+            if income >= 0:
+                raise serializers.ValidationError('deficit income cannot be greater than 0')
+        else:
+            if income <= 0:
+                raise serializers.ValidationError('income cannot be less than 1')
+
+        return attrs
         
     def create(self, validated_data):
         ride_income_instance = super().create(validated_data)
