@@ -33,12 +33,16 @@ services:
 
 
   celery:
-    build: ./payrollsystem
+    image: "celery:latest"
     container_name: celery
     command: >
-      sh -c "celery -A config worker -l info  &&
-      celery -A config beat -l info"
-
+      sh -c "celery worker -l info  &&
+      celery beat -l info"
+    environment:
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    links:
+      - redis
     depends_on:
       - redis
 
