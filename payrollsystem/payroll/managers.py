@@ -4,7 +4,6 @@ from django.utils.dateparse import parse_date
 from rest_framework.exceptions import ValidationError
 
 
-
 class DateDataManager:
 
     def get_specific_weekdays(self, start_date, end_date):
