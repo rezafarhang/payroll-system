@@ -1,8 +1,13 @@
 from datetime import date
 
 from django.db import models
-from django.core.validators import MinValueValidator
 from django.contrib.auth.models import User
+
+
+class RideIncomeType:
+    INCOME = 1
+    DEFICIT = 2
+    INCREMENT = 3
 
 
 class RideIncome(models.Model):
@@ -12,14 +17,14 @@ class RideIncome(models.Model):
         (3, 'increment'),
     )
     courier = models.ForeignKey(User, related_name='ride_incomes', on_delete=models.CASCADE)
-    income = models.IntegerField(validators=[MinValueValidator(1)])
+    income = models.IntegerField()
     type = models.IntegerField(choices=INCOME_TYPE_CHOICES)
     date = models.DateField(default=date.today())
 
 
 class PeriodicIncome(models.Model):
     courier = models.ForeignKey(User, on_delete=models.CASCADE)
-    income = models.IntegerField(validators=[MinValueValidator(1)])
+    income = models.IntegerField()
 
     class Meta:
         abstract = True
